@@ -1,0 +1,4 @@
+scikit-learn
+gradio
+pydantic
+torch torchvision --index-url https://download.pytorch.org/whl/cu126
