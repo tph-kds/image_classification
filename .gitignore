@@ -213,4 +213,5 @@ datasets/*
 checkpoints/*
 dc_env/*
 note.md 
+hf/*
 

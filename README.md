@@ -19,7 +19,7 @@
 ### Run Deployment on your local:
 - Utilizing `python deployment/gradio/main.py` \
 Or
-- On HuggingFace Server, you can access at: `` 
+- On HuggingFace Server, you can access at: `https://huggingface.co/spaces/vikenkd/image_classification` 
 
 
 
