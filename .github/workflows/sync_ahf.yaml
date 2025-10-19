@@ -25,12 +25,7 @@ jobs:
           git config --global user.email "$EMAIL_USER"
           git config --global user.name "tph-kds"
 
-      - name: Prepare remote and pull
+      - name: Force push to Hugging Face Space
         run: |
           git remote add hf https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$SPACE_NAME || true
-          git fetch hf main || true
-          git merge hf/main --allow-unrelated-histories --no-edit || true
-
-      - name: Push to Hugging Face Space
-        run: |
-          git push hf main
+          git push hf main --force
