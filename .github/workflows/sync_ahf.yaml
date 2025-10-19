@@ -40,10 +40,14 @@ jobs:
           git add .
           git commit -m "Clean binary files from history" || true
 
-      - name: Clean Git history (sync with origin)
+      - name: Sync with origin (safe)
         run: |
-          git fetch origin main
-          git rebase origin/main || true
+          if git remote | grep origin; then
+            git fetch origin main || true
+            git rebase origin/main || true
+          else
+            echo "No origin remote found, skipping rebase."
+          fi
 
       - name: Force push to Hugging Face Space
         run: |
