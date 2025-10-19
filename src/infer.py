@@ -49,5 +49,5 @@ def inference_pipeline(
 
 
 if __name__ == "__main__":
-    y_pred = inference_pipeline("D:\\Desktop\\stores\\Application\\GoldenOwl\\technical_test\\test_image_2.jpg")
+    y_pred = inference_pipeline("your_image_path.jpg")
     print(y_pred)

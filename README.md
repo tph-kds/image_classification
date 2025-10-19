@@ -17,7 +17,7 @@
 - Utilizing `python src/train.py`
 
 ### Run Deployment on your local:
-- Utilizing `python deployment/gradio/main.py` \
+- Utilizing `python deployment/gradio/app.py` \
 Or
 - On HuggingFace Server, you can access at: `https://huggingface.co/spaces/vikenkd/image_classification` 
 
