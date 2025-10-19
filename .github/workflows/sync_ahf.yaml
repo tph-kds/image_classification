@@ -25,14 +25,15 @@ jobs:
           git config --global user.email "$EMAIL_USER"
           git config --global user.name "tph-kds"
 
-      # Bước quan trọng: Xóa file .pth khỏi repo (để tránh push binary)
       - name: Remove large model files
         run: |
           find checkpoints -type f -name "*.pth" -delete || true
           git rm -f checkpoints/**/*.pth || true
           git commit -m "Remove .pth files before syncing to HF Space" || echo "No .pth files to remove"
+      
+      - name: Setup Git LFS
+        run: git lfs install
 
-      # Đảm bảo repo sạch, không lỗi
       - name: Clean Git history (optional but safe)
         run: |
           git fetch origin main
