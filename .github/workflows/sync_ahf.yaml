@@ -1,16 +1,15 @@
 name: Sync to Hugging Face hub
+
 on:
   push:
     branches: [main]
-
-  # to run this workflow manually from the Actions tab
   workflow_dispatch:
-  # Set up name HF_USERNAME and HF_TOKEN in the repository secrets
 
 env:
   HF_USERNAME: vikenkd
   HF_TOKEN: ${{ secrets.HF_TOKEN }}
   SPACE_NAME: image_classification
+  EMAIL_USER: ${{ secrets.EMAIL_USER }}
 
 jobs:
   sync-to-hub:
@@ -20,7 +19,18 @@ jobs:
         with:
           fetch-depth: 0
           lfs: true
-      - name: Push to hub
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git pull --allow-unrelated-histories && git push https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$SPACE_NAME main
+
+      - name: Configure Git
+        run: |
+          git config --global user.email "$EMAIL_USER"
+          git config --global user.name "tph-kds"
+
+      - name: Pull remote Hugging Face Space (merge if needed)
+        run: |
+          git remote add hf https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$SPACE_NAME || true
+          git fetch hf main || true
+          git pull hf main --allow-unrelated-histories --no-edit || true
+
+      - name: Push to Hugging Face Space
+        run: |
+          git push hf main
