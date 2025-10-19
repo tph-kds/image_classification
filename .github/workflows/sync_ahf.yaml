@@ -25,11 +25,19 @@ jobs:
           git config --global user.email "$EMAIL_USER"
           git config --global user.name "tph-kds"
 
-      # Xóa file .pth trước khi push (để tránh bị Hugging Face chặn)
-      - name: Remove local model checkpoints
+      # Bước quan trọng: Xóa file .pth khỏi repo (để tránh push binary)
+      - name: Remove large model files
         run: |
-          rm -f checkpoints/**/*.pth || true
-          
+          find checkpoints -type f -name "*.pth" -delete || true
+          git rm -f checkpoints/**/*.pth || true
+          git commit -m "Remove .pth files before syncing to HF Space" || echo "No .pth files to remove"
+
+      # Đảm bảo repo sạch, không lỗi
+      - name: Clean Git history (optional but safe)
+        run: |
+          git fetch origin main
+          git rebase origin/main || true
+
       - name: Force push to Hugging Face Space
         run: |
           git remote add hf https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$SPACE_NAME || true
