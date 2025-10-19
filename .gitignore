@@ -209,6 +209,7 @@ __marimo__/
 
 # local
 datasets/*
-checkpoints/*
+checkpoints/ckpt_23_10_2025_1/*
 dc_env/*
 note.md 
+

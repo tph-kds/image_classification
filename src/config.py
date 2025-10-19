@@ -35,6 +35,10 @@ class CatDogClassifierConfigs(BaseModel):
         default=2, 
         description="Number of output classes (cat and dog)"
     )
+    use_amp: bool = Field(
+        default=False,
+        description="Whether to use Automatic Mixed Precision (AMP) for training"
+    )
 
 class CatDogDatasetConfigsInput(BaseModel):
     data_path: str = Field(

@@ -22,6 +22,7 @@ class DataPreprocessor:
             transform = transforms.Compose([
                 transforms.Resize((self.image_size, self.image_size)),
                 transforms.RandomHorizontalFlip(p=self.horizontal_flip_prob),
+                transforms.RandomRotation(degrees=15),
                 transforms.ToTensor(),
                 transforms.Normalize(mean=self.mean, std=self.std),
             ])

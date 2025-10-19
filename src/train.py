@@ -1,8 +1,8 @@
 import os
 import torch
 import torch.nn as nn
+from datetime import datetime
 
-from src import model
 from src.config import (
     CatDogDatasetConfigsInput,
     CatDogClassifierConfigs,
@@ -50,6 +50,7 @@ def train_pipeline():
     preprocessor = DataPreprocessor(data_preprocessing_configs)
     train_dataloader, test_dataloader = preprocessor.create_dataloader()
     device = "cuda" if torch.cuda.is_available() else "cpu"
+    print(f"Using device: {device}")
 
     # Model training
     model_configs = CatDogClassifierConfigs(
@@ -60,7 +61,8 @@ def train_pipeline():
         kernel_size=3,
         stride=2,
         padding=1,
-        num_layers=3
+        num_layers=3,
+        use_amp=True
     )
 
     model = CatDogClassifier(model_configs)
@@ -81,7 +83,7 @@ def train_pipeline():
         model=model,
         train_dataloader=train_dataloader,
         test_dataloader=test_dataloader,
-        num_epochs=30,
+        num_epochs=20,
         loss_fn=loss_fn,
         optimizer=optimizer
     )
@@ -89,7 +91,7 @@ def train_pipeline():
     print(f"Training completed in {end_time - start_time} seconds.")
 
     # Save the trained model
-    torch.save(model.state_dict(), "cat_dog_classifier.pth")
+    torch.save(model.state_dict(), f"cat_dog_classifier_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pth")
     print("Model saved to cat_dog_classifier.pth")
 
 
