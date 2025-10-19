@@ -1,7 +1,8 @@
 import gradio as gr
 from src.infer import inference_pipeline
 
-model_path = "checkpoints/ckpt_23_10_2025/best_cat_dog_classifier_model_20251019_122336.pth"
+# model_path = "checkpoints/ckpt_23_10_2025/best_cat_dog_classifier_model_20251019_122336.pth"
+
 
 def classify_image(
         image_path: str
@@ -14,7 +15,8 @@ def classify_image(
     try:
         prediction = inference_pipeline(
             image_path=image_path, 
-            model_path=model_path
+            model_path=model_path,
+            hf=True
         )
         return f"Prediction: {prediction.capitalize()}"
     except Exception as e:
